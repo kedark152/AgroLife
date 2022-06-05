@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "22": "^0.0.0",
     "@chakra-ui/react": "^2.1.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@fontsource/dancing-script": "^4.5.8",
+    "@fontsource/exo": "^4.5.8",
+    "@fontsource/exo-2": "^4.5.8",
+    "@fontsource/overpass": "^4.5.8",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.2.0",
@@ -13,6 +18,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-icons": "^3.11.0",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^0.2.4"
   },
@@ -36,5 +42,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react-hooks": "^4.5.0"
   }
 }
