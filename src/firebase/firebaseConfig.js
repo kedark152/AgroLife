@@ -3,12 +3,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCm7LQoCrKth5C1MDDBh0xZM4kJNcjcpKw',
-  authDomain: 'agrolife-69d60.firebaseapp.com',
-  projectId: 'agrolife-69d60',
-  storageBucket: 'agrolife-69d60.appspot.com',
-  messagingSenderId: '634105288333',
-  appId: '1:634105288333:web:4b032446b2b789fa85f4c4',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 export const app = initializeApp(firebaseConfig);
