@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Text,
   Flex,
@@ -6,15 +7,34 @@ import {
   Avatar,
   Box,
   Container,
+  ButtonGroup,
+  IconButton,
+  Popover,
+  PopoverTrigger,
+  PopoverHeader,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
+  PopoverFooter,
 } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
 // import { NavLink } from 'react-router-dom';
 import { AiOutlineHome } from 'react-icons/ai';
+import { FiLogOut } from 'react-icons/fi';
 import { MdExplore, MdCreate } from 'react-icons/md';
-import { BsBookmark, BsThreeDots } from 'react-icons/bs';
+import { BsBookmark } from 'react-icons/bs';
 
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { CgProfile } from 'react-icons/cg';
 import { NavLink } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogout } from '../../features/auth/authSlice';
+import { useEffect } from 'react';
+import { useToast } from '@chakra-ui/react';
+import { setStatus } from '../../features/auth/authSlice';
+import { STATUSES } from '../../features/auth/authSlice';
 
 const getActiveStyle = ({ isActive }) => ({
   backgroundColor: isActive ? '#319795' : 'none',
@@ -22,6 +42,24 @@ const getActiveStyle = ({ isActive }) => ({
 });
 
 export const SideNavBar = () => {
+  const { isOpen, onToggle, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const authState = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if (authState.status === STATUSES.ERROR) {
+      toast({
+        title: 'Unable to Signout',
+        description: authState.statusMessage,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+      dispatch(setStatus({ status: STATUSES.IDLE, message: '' }));
+    }
+  }, [authState.status]);
+
   return (
     <Container
       as="aside"
@@ -32,8 +70,6 @@ export const SideNavBar = () => {
       top="86px"
       height="80vh"
       p="2"
-      // border="1px"
-      // borderColor="black"
     >
       <VStack marginBottom="auto">
         <Flex
@@ -104,7 +140,40 @@ export const SideNavBar = () => {
             <Text>@tanayPT</Text>
           </Flex>
         </Box>
-        <BsThreeDots size="1.5rem" />
+        <Popover
+          returnFocusOnClose={false}
+          isOpen={isOpen}
+          onClose={onClose}
+          placement="right"
+          closeOnBlur={false}
+        >
+          <PopoverTrigger>
+            <IconButton
+              aria-label="Search database"
+              icon={<FiLogOut size="1.2rem" />}
+              onClick={onToggle}
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverHeader fontWeight="semibold">Confirmation</PopoverHeader>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverBody>Are you sure you want to logout?</PopoverBody>
+            <PopoverFooter display="flex" justifyContent="flex-end">
+              <ButtonGroup size="sm">
+                <Button variant="outline" onClick={onToggle}>
+                  Cancel
+                </Button>
+                <Button
+                  colorScheme="red"
+                  onClick={() => dispatch(userLogout())}
+                >
+                  Yes
+                </Button>
+              </ButtonGroup>
+            </PopoverFooter>
+          </PopoverContent>
+        </Popover>
       </Flex>
     </Container>
   );
