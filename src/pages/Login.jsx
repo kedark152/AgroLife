@@ -1,4 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
+  FormControl,
+  IconButton,
   Container,
   Flex,
   Box,
@@ -10,13 +13,86 @@ import {
   Link,
   Divider,
 } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { NavLink } from 'react-router-dom';
 import { Footer } from '../components/layouts/Footer';
-
 import '@fontsource/dancing-script';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../features/auth/authSlice';
+import { useToast } from '@chakra-ui/react';
+import { setStatus } from '../features/auth/authSlice';
+import { STATUSES } from '../features/auth/authSlice';
 
 export const Login = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || '/home';
+  // Used to Show/Hide Password
+  const [passwordType, setPasswordType] = useState('password');
+  const initialInputState = {
+    email: '',
+    password: '',
+  };
+
+  const [input, setInput] = useState(initialInputState);
+  const dispatch = useDispatch();
+  const authState = useSelector(state => state.auth);
+
+  const handleSignin = e => {
+    e.preventDefault();
+    dispatch(userLogin(input));
+  };
+
+  useEffect(() => {
+    if (authState.status === STATUSES.ERROR) {
+      setInput(initialInputState);
+      toast({
+        title: 'Sorry, Unable to Login!',
+        description: authState.statusMessage,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      dispatch(setStatus({ status: STATUSES.IDLE, message: '' }));
+    }
+  }, [authState.status]);
+
+  useEffect(() => {
+    if (authState.statusMessage === STATUSES.LOGGED_IN) {
+      setInput(initialInputState);
+
+      toast({
+        title: 'Login Successful.',
+        description: 'You are logged in',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+
+      dispatch(setStatus({ status: STATUSES.IDLE, message: '' }));
+    }
+    if (authState.statusMessage === STATUSES.LOGGED_OUT) {
+      toast({
+        title: 'Logout Success.',
+        status: 'success',
+        duration: 1000,
+        isClosable: true,
+      });
+
+      dispatch(setStatus({ status: STATUSES.IDLE, message: '' }));
+    }
+  }, [authState.statusMessage]);
+
+  useEffect(() => {
+    if (authState.userData) {
+      navigate(from, { replace: true });
+    }
+  }, [authState.userData]);
+
   return (
     <>
       <ColorModeSwitcher position="absolute" right="2rem" />
@@ -39,6 +115,7 @@ export const Login = () => {
           </Box>
           <Spacer />
           <Box
+            as="form"
             width="30rem"
             height="max-content"
             boxShadow="2xl"
@@ -46,39 +123,103 @@ export const Login = () => {
             marginY="2rem"
             padding="15px"
             borderRadius="10"
+            onSubmit={handleSignin}
           >
             <Flex direction="column" gap="10px">
-              <FormLabel htmlFor="emailField" fontWeight="bold">
-                Email Address
-              </FormLabel>
-              <Input
-                size="md"
-                variant="outline"
-                id="emailField"
-                placeholder="Email"
-                borderRadius="5px"
-              />
-              <FormLabel htmlFor="passwordField" fontWeight="bold">
-                Password
-              </FormLabel>
-              <Input
-                size="md"
-                id="passwordField"
-                type="password"
-                placeholder="Password"
-                borderRadius="5px"
-              />
-              <Button colorScheme="brand" size="lg">
+              <FormControl isRequired>
+                <FormLabel htmlFor="emailField" fontWeight="bold">
+                  Email Address
+                </FormLabel>
+                <Input
+                  type="email"
+                  pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
+                  size="md"
+                  variant="outline"
+                  id="emailField"
+                  placeholder="Email"
+                  borderRadius="5px"
+                  marginBottom="5px"
+                  value={input.email}
+                  onChange={e =>
+                    setInput(input => ({ ...input, email: e.target.value }))
+                  }
+                />
+              </FormControl>
+
+              <Box position="relative">
+                <FormControl isRequired>
+                  <FormLabel htmlFor="passwordField" fontWeight="bold">
+                    Password
+                  </FormLabel>
+
+                  <Input
+                    size="md"
+                    id="passwordField"
+                    type={passwordType}
+                    placeholder="Password"
+                    borderRadius="5px"
+                    marginBottom="5px"
+                    value={input.password}
+                    minLength="8"
+                    onChange={e =>
+                      setInput(input => ({
+                        ...input,
+                        password: e.target.value,
+                      }))
+                    }
+                  />
+
+                  <IconButton
+                    variant="outline"
+                    colorScheme="teal"
+                    aria-label="Call Sage"
+                    border="none"
+                    fontSize="30px"
+                    zIndex="2"
+                    icon={
+                      passwordType == 'password' ? (
+                        <AiFillEye />
+                      ) : (
+                        <AiFillEyeInvisible />
+                      )
+                    }
+                    position="absolute"
+                    right="10px"
+                    onClick={() =>
+                      setPasswordType(passwordType =>
+                        passwordType === 'password' ? 'text' : 'password'
+                      )
+                    }
+                  />
+                </FormControl>
+              </Box>
+              <Button
+                isLoading={authState.status === STATUSES.LOADING}
+                loadingText={
+                  authState.status === STATUSES.LOADING &&
+                  `Signing in...Please wait`
+                }
+                type="submit"
+                colorScheme="brand"
+                size="lg"
+              >
                 Log In
               </Button>
-              <Button
-                as={NavLink}
-                to="/home"
-                colorScheme="teal"
-                variant="outline"
-              >
-                Test Login (Go to Home Page)
-              </Button>
+              {authState.status !== STATUSES.LOADING && (
+                <Button
+                  type="submit"
+                  colorScheme="teal"
+                  variant="outline"
+                  onClick={() =>
+                    setInput({
+                      email: 'kedar@agrolife.com',
+                      password: 'kedarInGoa@123',
+                    })
+                  }
+                >
+                  Test Login
+                </Button>
+              )}
               <Link color="black.500" href="#" marginY="5px">
                 Forgot Password?
               </Link>
