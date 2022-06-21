@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import { STATUSES } from '../features/auth/authSlice';
+import { STATUSES } from '../utilities/statusesConstants';
 
 export const RequiresAuth = () => {
   const authState = useSelector(state => state.auth);
