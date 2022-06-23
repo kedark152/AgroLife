@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { TopBar } from '../components/TopBar';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { STATUSES } from '../features/auth/authSlice';
+import { STATUSES } from '../utilities/statusesConstants';
 import { setStatus } from '../features/auth/authSlice';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { userSignup } from '../features/auth/authSlice';

@@ -7,20 +7,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { auth, database } from '../../firebase/firebaseConfig';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { STATUSES } from '../../utilities/statusesConstants';
 
-//enum like mechnaism
-export const STATUSES = Object.freeze({
-  IDLE: 'idle',
-  SUCCESS: 'success',
-  ERROR: 'error',
-  LOADING: 'loading',
-  LOGGED_IN: 'loggedIn',
-  LOGGED_OUT: 'loggedOut',
-});
-export const BOOL = Object.freeze({
-  TRUE: true,
-  FALSE: false,
-});
 
 const createUserProfile = (uid, name, userName, email) => {
   return {
@@ -29,8 +17,8 @@ const createUserProfile = (uid, name, userName, email) => {
     userName,
     email,
     profileImageUrl: '',
+    coverImageUrl: '',
     bio: '',
-    website: '',
     following: [],
     followers: [],
     posts: [],

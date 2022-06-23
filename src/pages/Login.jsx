@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../features/auth/authSlice';
 import { useToast } from '@chakra-ui/react';
 import { setStatus } from '../features/auth/authSlice';
-import { STATUSES } from '../features/auth/authSlice';
+import { STATUSES } from '../utilities/statusesConstants';
 
 export const Login = () => {
   const toast = useToast();
@@ -78,8 +78,9 @@ export const Login = () => {
     if (authState.statusMessage === STATUSES.LOGGED_OUT) {
       toast({
         title: 'Logout Success.',
+        description: 'You are logged out',
         status: 'success',
-        duration: 1000,
+        duration: 2000,
         isClosable: true,
       });
 
