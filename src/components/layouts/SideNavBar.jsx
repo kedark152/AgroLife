@@ -3,7 +3,6 @@ import { Text, Flex, VStack, Avatar, Box, Container } from '@chakra-ui/react';
 import { AiOutlineHome } from 'react-icons/ai';
 import { MdExplore } from 'react-icons/md';
 import { BsBookmark } from 'react-icons/bs';
-import { IoIosNotificationsOutline } from 'react-icons/io';
 import { CgProfile } from 'react-icons/cg';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +22,7 @@ export const SideNavBar = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const authState = useSelector(state => state.auth);
-  const { userName, name } = authState.userData;
+  const { userName, name, uid, profileImageUrl } = authState.userData;
 
   useEffect(() => {
     if (authState.status === STATUSES.ERROR) {
@@ -76,17 +75,23 @@ export const SideNavBar = () => {
           <MdExplore fontSize="1.25rem" />
           <Text marginLeft={2}>Explore</Text>
         </Flex>
-        <Flex alignItems="center" fontSize="1.25rem" w="100%">
+        <Flex
+          as={NavLink}
+          to="/bookmarks"
+          style={getActiveStyle}
+          px="1.5"
+          py="1"
+          borderRadius="5"
+          align="center"
+          fontSize="1.25rem"
+          w="100%"
+        >
           <BsBookmark fontSize="1.25rem" />
           <Text marginLeft={2}>Bookmarks</Text>
         </Flex>
-        <Flex alignItems="center" fontSize="1.25rem" w="100%">
-          <IoIosNotificationsOutline fontSize="1.25rem" />
-          <Text marginLeft={2}>Notifications</Text>
-        </Flex>
         <Flex
           as={NavLink}
-          to="/myprofile"
+          to={`/user/${uid}`}
           style={getActiveStyle}
           px="1.5"
           py="1"
@@ -101,7 +106,7 @@ export const SideNavBar = () => {
         <CreatePostModal />
       </VStack>
       <Flex align="center" marginTop="10rem">
-        <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+        <Avatar name={name} src={profileImageUrl} />
         <Box marginLeft="2" height={'max-content'} width="100%">
           <Flex direction="column">
             <Text fontWeight="bold">{name}</Text>
