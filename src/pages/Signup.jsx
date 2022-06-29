@@ -49,7 +49,7 @@ export const Signup = () => {
       setInput(initialInputState);
       toast({
         title: 'Account created.',
-        description: "We've created your account for you.",
+        description: "We've created new account for you.",
         status: 'success',
         duration: 5000,
         isClosable: true,
