@@ -53,7 +53,7 @@ export const EditPostModal = ({ postData }) => {
 
     let imageLink = imageSrc;
     const formData = new FormData(e.currentTarget);
-    console.log(formData.get('uploadImage'));
+
     const file = formData.get('uploadImage');
     if (showImagePicker && file.size != 0) {
       formData.append('file', file);
@@ -68,7 +68,7 @@ export const EditPostModal = ({ postData }) => {
       )
         .then(r => r.json())
         .catch(error => console.log(error));
-      console.log(data);
+
       imageLink = data.secure_url;
       if (imageLink) {
         setImageSrc(imageLink);
