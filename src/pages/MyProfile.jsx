@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SideNavBar } from '../components/layouts/SideNavBar';
+import { userLogout } from '../features/auth/authSlice';
 import { TopBar } from '../components/TopBar';
 import { Post } from '../components/cards/Post';
 import { SearchBar } from '../components/SearchBar';
 import { WhoToFollow } from '../components/cards/WhoToFollow';
 import {
   Box,
+  Link,
   Container,
   Grid,
   GridItem,
@@ -17,18 +19,96 @@ import {
   VStack,
   Button,
   Spinner,
+  useBoolean,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
-
+import { useParams } from 'react-router-dom';
 import { useCrudToast } from '../hooks/useCrudToast';
+import { useLikeToast } from '../hooks/useLikeToast';
+import { useBookmarkToast } from '../hooks/useBookmarkToast';
+import { useEffect } from 'react';
+import {
+  getUserProfile,
+  setUserProfileStatus,
+} from '../features/users/userSlice';
+import { getSingleUserPosts } from '../features/post/postSlice';
+import { STATUSES } from '../utilities/statusesConstants';
+import { EditProfileModal } from '../components/EditProfileModal';
+import {
+  setFollowingState,
+  setUnFollowingState,
+} from '../features/auth/authSlice';
+import { followUser } from '../features/users/userSlice';
+
+import { unFollowUser } from '../features/users/userSlice';
 
 export const MyProfile = () => {
   const defaultHeaderImg = 'https://tiny.cc/defaultHeaderImg';
-
+  let { userId } = useParams();
+  const dispatch = useDispatch();
+  const userProfile = useSelector(state => state.user.userProfile);
+  const {
+    userName,
+    name,
+    bio,
+    followers,
+    following,
+    uid,
+    website,
+    profileImageUrl,
+    coverImageUrl,
+  } = userProfile;
   const authState = useSelector(state => state.auth);
-  const { userName, name, bio, followers, following } = authState.userData;
-  const { allPosts, allPostsStatus } = useCrudToast('newest');
+  const followingList = authState.userData.following;
+  const currentUserId = authState.userData.uid;
+  const isFollowingUser = followingList.includes(userId);
+  const postState = useSelector(state => state.post);
+  const userProfileState = useSelector(state => state.user);
+  const userProfileStatus = userProfileState.userProfileStatus;
+  const followStatus = useSelector(state => state.user.followStatus);
+  const postModalState = useSelector(state => state.postModal);
+  const singleUserPosts = postState.singleUserPosts;
+
+  const singleUserPostsStatus = useSelector(
+    state => state.post.singleUserPostsStatus
+  );
+
+  const [isFollowing, setIsFollowing] = useBoolean(isFollowingUser); //By Default initial state is false
+
+  const dispatchAction = isFollowing => {
+    setIsFollowing.toggle();
+    if (isFollowing) {
+      dispatch(unFollowUser({ currentUserId, unFollowUserId: userId }));
+      dispatch(setUnFollowingState(userId));
+    } else {
+      dispatch(followUser({ currentUserId, followUserId: userId }));
+      dispatch(setFollowingState(userId));
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getUserProfile({ userId }));
+    // dispatch(setUserProfileStatus('idle'));
+  }, [
+    userId,
+    userProfileStatus === STATUSES.SUCCESS,
+    followStatus === STATUSES.SUCCESS,
+  ]);
+
+  useEffect(() => {
+    dispatch(getSingleUserPosts({ userId }));
+    dispatch(setUserProfileStatus(STATUSES.IDLE));
+  }, [
+    userId,
+    userProfileStatus === STATUSES.SUCCESS,
+    postModalState.status == STATUSES.SUCCESS,
+  ]);
+
+  //use-Effect Toasts
+  useCrudToast();
+  useLikeToast();
+  useBookmarkToast();
 
   return (
     <Container maxWidth="100vw" padding={0}>
@@ -59,7 +139,7 @@ export const MyProfile = () => {
             borderRadius="14px"
           >
             <Image
-              // src={headerImage}
+              src={coverImageUrl}
               boxSize="100%"
               objectFit="cover"
               borderRadius="14px"
@@ -67,11 +147,7 @@ export const MyProfile = () => {
             />
           </Box>
           <VStack marginBottom="30" marginTop="8rem" justifyContent="center">
-            <Avatar
-              size="2xl"
-              name="Dan Abrahmov"
-              src="https://bit.ly/dan-abramov"
-            />
+            <Avatar size="2xl" name={name} src={profileImageUrl} />
 
             <Flex direction="column" position="relative">
               <Text fontWeight="bold" fontSize="xl">
@@ -79,14 +155,35 @@ export const MyProfile = () => {
               </Text>
               <Text marginLeft="5">@{userName}</Text>
 
-              <Button colorScheme="teal" variant="outline" marginY="2">
-                Edit Profile
-              </Button>
+              {currentUserId == uid ? (
+                <>
+                  <EditProfileModal userData={userProfile} />
+                  <Button
+                    colorScheme="red"
+                    variant="outline"
+                    onClick={() => dispatch(userLogout())}
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  colorScheme="teal"
+                  variant={isFollowing ? `outline` : `solid`}
+                  marginY="2"
+                  onClick={() => dispatchAction(isFollowing)}
+                >
+                  {isFollowing ? `Following` : `Follow`}
+                </Button>
+              )}
             </Flex>
             <Text marginLeft="5">
               {following.length} Following • {followers.length} Followers
             </Text>
-            <Text>{bio}</Text>
+            <Text>
+              My Website:<Link marginLeft="1">{website}</Link>
+            </Text>
+            <Text>Bio: {bio}</Text>
           </VStack>
 
           <Divider marginTop="4" borderColor="black" />
@@ -94,7 +191,7 @@ export const MyProfile = () => {
             My Recent Posts
           </Text>
 
-          {allPostsStatus === 'loading' ? (
+          {singleUserPostsStatus === 'loading' ? (
             <Spinner
               position="absolute"
               thickness="4px"
@@ -106,16 +203,24 @@ export const MyProfile = () => {
               top="35rem"
             />
           ) : (
-            allPosts.length == 0 && (
-              <Text fontSize="3xl" position="absolute" top="35rem" left="20rem">
+            singleUserPosts.length == 0 && (
+              <Text fontSize="3xl" position="absolute" left="10rem">
                 No Post Found...
               </Text>
             )
           )}
 
-          {allPostsStatus !== 'loading' &&
-            allPosts.length > 0 &&
-            allPosts.map(post => <Post key={uuid()} postData={post} />)}
+          {singleUserPostsStatus !== 'loading' &&
+            singleUserPosts.length > 0 &&
+            singleUserPosts.map((post, index) => (
+              <Post
+                key={uuid()}
+                postData={post}
+                currentUserId={userId}
+                index={index}
+                pageName={'profile'}
+              />
+            ))}
         </Box>
 
         <Box
