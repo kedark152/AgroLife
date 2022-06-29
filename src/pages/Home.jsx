@@ -23,31 +23,48 @@ import {
 } from 'react-icons/ai';
 
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sortPostsBy } from '../utilities/utils';
-import { setAllPosts } from '../features/post/postSlice';
+import { getHomePosts, setHomePosts } from '../features/post/postSlice';
 import { STATUSES } from '../utilities/statusesConstants';
 import { useCrudToast } from '../hooks/useCrudToast';
+import { useLikeToast } from '../hooks/useLikeToast';
+import { useBookmarkToast } from '../hooks/useBookmarkToast';
 
 export const Home = () => {
   const dispatch = useDispatch();
+  const authState = useSelector(state => state.auth);
+  const followStatus = useSelector(state => state.user.followStatus);
+  const userId = authState.userData.uid;
+  const followingIds = authState.userData.following;
   const [sortPosts, setSortPosts] = useState('newest');
-  const { allPosts, allPostsStatus } = useCrudToast(sortPosts); //uses useEffect
+  const homePosts = useSelector(state => state.post.homePosts);
+  const homePostsStatus = useSelector(state => state.post.homePostsStatus);
+  const postModalState = useSelector(state => state.postModal);
+
+  useEffect(() => {
+    dispatch(getHomePosts({ userId, followingIds, sortPosts }));
+  }, [postModalState.status == STATUSES.SUCCESS, followStatus == 'success']);
 
   useEffect(() => {
     //for sorting post on sort state change
-    if (allPostsStatus === STATUSES.SUCCESS) {
-      dispatch(setAllPosts(sortPostsBy(allPosts, sortPosts)));
+    if (homePostsStatus === STATUSES.SUCCESS) {
+      dispatch(setHomePosts(sortPostsBy(homePosts, sortPosts)));
     }
   }, [sortPosts]);
+
+  //use-Effect Toasts
+  useCrudToast();
+  useLikeToast();
+  useBookmarkToast();
 
   return (
     <Container maxWidth="100vw" padding={0}>
       <TopBar />
 
       <Grid
-        templateColumns={'1fr 3fr 1.2fr'}
-        gap="5"
+        templateColumns={'1fr 3fr 1.5fr'}
+        gap="1"
         justifyContent="center"
         marginTop="5rem"
       >
@@ -90,11 +107,11 @@ export const Home = () => {
           {/* <CreatePost /> */}
           <Divider marginTop="4" borderColor="black" />
 
-          {allPostsStatus === 'loading' ? (
+          {homePostsStatus === 'loading' ? (
             <Spinner
               position="absolute"
               thickness="4px"
-              speed="0.65s"
+              speed="0.25s"
               emptyColor="gray.200"
               color="blue.500"
               size="xl"
@@ -102,16 +119,24 @@ export const Home = () => {
               top="15rem"
             />
           ) : (
-            allPosts.length == 0 && (
+            homePosts.length == 0 && (
               <Text fontSize="3xl" position="absolute" left="20rem">
                 No Post Found...
               </Text>
             )
           )}
 
-          {allPostsStatus !== 'loading' &&
-            allPosts.length > 0 &&
-            allPosts.map(post => <Post key={uuid()} postData={post} />)}
+          {homePostsStatus !== 'loading' &&
+            homePosts.length > 0 &&
+            homePosts.map((post, index) => (
+              <Post
+                key={uuid()}
+                postData={post}
+                currentUserId={userId}
+                index={index}
+                pageName={'home'}
+              />
+            ))}
         </Box>
         <Box
           as={GridItem}
