@@ -6,7 +6,7 @@ import {
   setUnFollowingState,
 } from '../features/auth/authSlice';
 import { followUser } from '../features/users/userSlice';
-
+import { Link } from 'react-router-dom';
 import { unFollowUser } from '../features/users/userSlice';
 
 export const FollowUserFlex = ({
@@ -33,7 +33,14 @@ export const FollowUserFlex = ({
   return (
     <Flex align="center" marginY={2}>
       <Avatar name={name} src="https://bit.ly/dan-abramov" />
-      <Box marginLeft="5" height={'max-content'} width="100%">
+      <Box
+        as={Link}
+        to={`/user/${userId}`}
+        marginLeft="5"
+        height={'max-content'}
+        width="100%"
+        cursor="pointer"
+      >
         <Flex direction="column">
           <Text fontWeight="bold">{name}</Text>
           <Text>@{userName}</Text>
