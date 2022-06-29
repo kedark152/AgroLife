@@ -9,7 +9,6 @@ import { auth, database } from '../../firebase/firebaseConfig';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { STATUSES } from '../../utilities/statusesConstants';
 
-
 const createUserProfile = (uid, name, userName, email) => {
   return {
     uid,
@@ -18,6 +17,7 @@ const createUserProfile = (uid, name, userName, email) => {
     email,
     profileImageUrl: '',
     coverImageUrl: '',
+    website: '',
     bio: '',
     following: [],
     followers: [],
@@ -80,12 +80,39 @@ const initialState = {
   statusMessage: '',
 };
 
+//auth slice consists of userData which is current user loggedIn data
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     setUserData: (state, action) => {
       state.userData = action.payload;
+    },
+    setAuthUserName: (state, action) => {
+      state.userData.name = action.payload;
+    },
+    setAuthUserProfileURL: (state, action) => {
+      state.userData.profileImageUrl = action.payload;
+    },
+    setFollowingState: (state, action) => {
+      state.userData.following = state.userData.following.concat(
+        action.payload //payload is user id
+      );
+    },
+    setUnFollowingState: (state, action) => {
+      state.userData.following = state.userData.following.filter(
+        userId => userId !== action.payload
+      );
+    },
+    setBookmarkState: (state, action) => {
+      state.userData.bookmarks = state.userData.bookmarks.concat(
+        action.payload //payload is post id
+      );
+    },
+    setUnBookmarkState: (state, action) => {
+      state.userData.bookmarks = state.userData.bookmarks.filter(
+        postId => postId !== action.payload //payload is post id
+      );
     },
     setStatus: (state, action) => {
       state.status = action.payload.status;
@@ -132,5 +159,14 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUserData, setStatus } = authSlice.actions;
+export const {
+  setUserData,
+  setStatus,
+  setBookmarkState,
+  setUnBookmarkState,
+  setFollowingState,
+  setUnFollowingState,
+  setAuthUserName,
+  setAuthUserProfileURL,
+} = authSlice.actions;
 export default authSlice.reducer;
