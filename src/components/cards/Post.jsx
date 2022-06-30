@@ -7,6 +7,7 @@ import {
   Image,
   useBoolean,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineHeart, AiOutlineShareAlt, AiFillHeart } from 'react-icons/ai';
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs';
@@ -99,7 +100,12 @@ export const Post = ({ postData, currentUserId, index, pageName }) => {
       id={postId}
     >
       <Flex>
-        <Avatar name={name} src={profileImageUrl} />
+        <Avatar
+          as={Link}
+          to={`/user/${uid}`}
+          name={name}
+          src={profileImageUrl}
+        />
         <Box marginLeft="5" height={'max-content'} width="100%">
           <Flex alignItems={'center'} justifyContent="space-between">
             <Flex>
