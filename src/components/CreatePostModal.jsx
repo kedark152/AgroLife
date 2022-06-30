@@ -51,7 +51,6 @@ export const CreatePostModal = () => {
     e.preventDefault();
     let imageLink;
     const formData = new FormData(e.currentTarget);
-    console.log(formData.get('uploadImage'));
     const file = formData.get('uploadImage');
     //Image Upload & get link from Cloudinary
     if (showImagePicker && file.size != 0) {
@@ -67,7 +66,7 @@ export const CreatePostModal = () => {
       )
         .then(r => r.json())
         .catch(error => console.log(error));
-      console.log(data);
+
       imageLink = data.secure_url;
       if (imageLink) {
         setImageSrc(imageLink);
@@ -77,6 +76,7 @@ export const CreatePostModal = () => {
       createPost({
         textContent: postData,
         imageUrl: imageLink ? imageLink : '',
+        profileImageUrl: authUserData.profileImageUrl,
         uid: authUserData.uid,
         name: authUserData.name,
         userName: authUserData.userName,

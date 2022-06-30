@@ -6,13 +6,18 @@ import {
   deleteDoc,
   doc,
   updateDoc,
+  arrayUnion,
+  arrayRemove,
 } from 'firebase/firestore';
 import { STATUSES } from '../../utilities/statusesConstants';
 import { getCurrentDate } from '../../utilities/utils';
 
 export const createPost = createAsyncThunk(
   'postModal/createPost',
-  async ({ textContent, imageUrl, uid, name, userName }, thunkAPI) => {
+  async (
+    { textContent, imageUrl, uid, name, userName, profileImageUrl },
+    thunkAPI
+  ) => {
     try {
       const postData = {
         textContent,
@@ -20,11 +25,11 @@ export const createPost = createAsyncThunk(
         uid,
         name,
         userName,
+        profileImageUrl,
+        likes: [],
         uploadDate: getCurrentDate(),
       };
-      console.log('postData', postData);
       const uploadPost = await addDoc(collection(database, 'posts'), postData);
-      console.log('Upload Post id', uploadPost.id);
 
       return { ...postData, postId: uploadPost.id };
     } catch (error) {
@@ -55,7 +60,58 @@ export const editPost = createAsyncThunk(
     }
   }
 );
-
+export const likePost = createAsyncThunk(
+  'postModal/likePost',
+  async ({ postId, currentUserId }, thunkAPI) => {
+    try {
+      const postRef = doc(database, 'posts', postId);
+      await updateDoc(postRef, {
+        likes: arrayUnion(currentUserId),
+      });
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const unLikePost = createAsyncThunk(
+  'postModal/unLikePost',
+  async ({ postId, currentUserId }, thunkAPI) => {
+    try {
+      const postRef = doc(database, 'posts', postId);
+      await updateDoc(postRef, {
+        likes: arrayRemove(currentUserId),
+      });
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const bookmarkPost = createAsyncThunk(
+  'postModal/bookmarkPost',
+  async ({ postId, currentUserId }, thunkAPI) => {
+    try {
+      const currentUserRef = doc(database, 'users', currentUserId);
+      await updateDoc(currentUserRef, {
+        bookmarks: arrayUnion(postId),
+      });
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const UnBookmarkPost = createAsyncThunk(
+  'postModal/UnBookmarkPost',
+  async ({ postId, currentUserId }, thunkAPI) => {
+    try {
+      const currentUserRef = doc(database, 'users', currentUserId);
+      await updateDoc(currentUserRef, {
+        bookmarks: arrayRemove(postId),
+      });
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 const initialState = {
   postModalData: null,
   status: STATUSES.IDLE,
@@ -107,6 +163,42 @@ const postModalSlice = createSlice({
     },
     [editPost.rejected]: (state, action) => {
       console.log('editPost Rejected', action.payload);
+      state.status = STATUSES.ERROR;
+      state.statusMessage = action.payload;
+    },
+    [likePost.fulfilled]: state => {
+      state.status = STATUSES.SUCCESS_LIKE;
+      state.statusMessage = STATUSES.POST_LIKED;
+    },
+    [likePost.rejected]: (state, action) => {
+      console.log('Like Post Rejected', action.payload);
+      state.status = STATUSES.ERROR;
+      state.statusMessage = action.payload;
+    },
+    [unLikePost.fulfilled]: state => {
+      state.status = STATUSES.SUCCESS_UNLIKE;
+      state.statusMessage = STATUSES.POST_UNLIKED;
+    },
+    [unLikePost.rejected]: (state, action) => {
+      console.log('Unlike Post Rejected', action.payload);
+      state.status = STATUSES.ERROR;
+      state.statusMessage = action.payload;
+    },
+    [bookmarkPost.fulfilled]: state => {
+      state.status = STATUSES.SUCCESS_BOOKMARK;
+      state.statusMessage = STATUSES.POST_BOOKMARKED;
+    },
+    [bookmarkPost.rejected]: (state, action) => {
+      console.log('bookmarkPost  Rejected', action.payload);
+      state.status = STATUSES.ERROR;
+      state.statusMessage = action.payload;
+    },
+    [UnBookmarkPost.fulfilled]: state => {
+      state.status = STATUSES.SUCCESS_UNBOOKMARK;
+      state.statusMessage = STATUSES.POST_UNBOOKMARKED;
+    },
+    [UnBookmarkPost.rejected]: (state, action) => {
+      console.log('UnBookmarkPost  Rejected', action.payload);
       state.status = STATUSES.ERROR;
       state.statusMessage = action.payload;
     },

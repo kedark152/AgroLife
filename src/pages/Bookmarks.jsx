@@ -16,40 +16,44 @@ import {
   Button,
   Divider,
 } from '@chakra-ui/react';
-import {
-  AiFillFire,
-  AiOutlineArrowUp,
-  AiOutlineArrowDown,
-} from 'react-icons/ai';
+import { AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai';
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortPostsBy } from '../utilities/utils';
-import { getHomePosts, setHomePosts } from '../features/post/postSlice';
+import {
+  getBookmarksPosts,
+  setBookmarksPosts,
+} from '../features/post/postSlice';
 import { STATUSES } from '../utilities/statusesConstants';
 import { useCrudToast } from '../hooks/useCrudToast';
 import { useLikeToast } from '../hooks/useLikeToast';
 import { useBookmarkToast } from '../hooks/useBookmarkToast';
 
-export const Home = () => {
+export const Bookmarks = () => {
   const dispatch = useDispatch();
   const authState = useSelector(state => state.auth);
-  const followStatus = useSelector(state => state.user.followStatus);
-  const userId = authState.userData.uid;
-  const followingIds = authState.userData.following;
-  const [sortPosts, setSortPosts] = useState('newest');
-  const homePosts = useSelector(state => state.post.homePosts);
-  const homePostsStatus = useSelector(state => state.post.homePostsStatus);
   const postModalState = useSelector(state => state.postModal);
+  const userId = authState.userData.uid;
+  const bookmarksIds = authState.userData.bookmarks;
+  const [sortPosts, setSortPosts] = useState('newest');
+  const bookmarksPosts = useSelector(state => state.post.bookmarksPosts);
+  const bookmarksPostsStatus = useSelector(
+    state => state.post.bookmarksPostsStatus
+  );
 
   useEffect(() => {
-    dispatch(getHomePosts({ userId, followingIds, sortPosts }));
-  }, [postModalState.status == STATUSES.SUCCESS, followStatus == 'success']);
+    dispatch(getBookmarksPosts({ bookmarksIds, sortPosts }));
+  }, [
+    postModalState.status == STATUSES.SUCCESS,
+    postModalState.status == STATUSES.SUCCESS_BOOKMARK,
+    postModalState.status == STATUSES.SUCCESS_UNBOOKMARK,
+  ]);
 
   useEffect(() => {
     //for sorting post on sort state change
-    if (homePostsStatus === STATUSES.SUCCESS) {
-      dispatch(setHomePosts(sortPostsBy(homePosts, sortPosts)));
+    if (bookmarksPostsStatus === STATUSES.SUCCESS) {
+      dispatch(setBookmarksPosts(sortPostsBy(bookmarksPosts, sortPosts)));
     }
   }, [sortPosts]);
 
@@ -81,13 +85,6 @@ export const Home = () => {
         <Box as={GridItem}>
           <HStack marginBottom="30" justifyContent="center">
             <Button
-              leftIcon={<AiFillFire size="1.25rem" />}
-              colorScheme="teal"
-              variant="outline"
-            >
-              Trending
-            </Button>
-            <Button
               leftIcon={<AiOutlineArrowUp size="1.25rem" />}
               colorScheme="teal"
               variant={sortPosts == 'newest' ? 'solid' : 'outline'}
@@ -107,7 +104,7 @@ export const Home = () => {
           {/* <CreatePost /> */}
           <Divider marginTop="4" borderColor="black" />
 
-          {homePostsStatus === 'loading' ? (
+          {bookmarksPostsStatus === 'loading' ? (
             <Spinner
               position="absolute"
               thickness="4px"
@@ -119,22 +116,22 @@ export const Home = () => {
               top="15rem"
             />
           ) : (
-            homePosts.length == 0 && (
+            bookmarksPosts.length == 0 && (
               <Text fontSize="3xl" position="absolute" left="20rem">
                 No Post Found...
               </Text>
             )
           )}
 
-          {homePostsStatus !== 'loading' &&
-            homePosts.length > 0 &&
-            homePosts.map((post, index) => (
+          {bookmarksPostsStatus !== 'loading' &&
+            bookmarksPosts.length > 0 &&
+            bookmarksPosts.map((post, index) => (
               <Post
                 key={uuid()}
                 postData={post}
                 currentUserId={userId}
                 index={index}
-                pageName={'home'}
+                pageName={'bookmarks'}
               />
             ))}
         </Box>

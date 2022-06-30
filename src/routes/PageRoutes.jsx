@@ -4,6 +4,7 @@ import { Home } from '../pages/Home';
 import { Explore } from '../pages/Explore';
 import { MyProfile } from '../pages/MyProfile';
 import { Signup } from '../pages/Signup';
+import { Bookmarks } from '../pages/Bookmarks';
 import { RequiresAuth } from './RequiresAuth';
 
 export const PageRoutes = () => {
@@ -15,7 +16,8 @@ export const PageRoutes = () => {
       <Route element={<RequiresAuth />}>
         <Route path="/home" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
-        <Route path="/myprofile" element={<MyProfile />} />
+        <Route path="/user/:userId" element={<MyProfile />} />
+        <Route path="/bookmarks" element={<Bookmarks />} />
       </Route>
     </Routes>
   );
