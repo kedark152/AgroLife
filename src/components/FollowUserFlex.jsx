@@ -32,12 +32,7 @@ export const FollowUserFlex = ({
 
   return (
     <Flex align="center" marginY={2}>
-      <Avatar
-        as={Link}
-        to={`/user/${userId}`}
-        name={name}
-        src="https://bit.ly/dan-abramov"
-      />
+      <Avatar as={Link} to={`/user/${userId}`} name={name} />
       <Box
         as={Link}
         to={`/user/${userId}`}
