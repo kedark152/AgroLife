@@ -219,7 +219,6 @@ const userSlice = createSlice({
     [followUser.fulfilled]: state => {
       state.followStatus = STATUSES.SUCCESS;
       state.followStatusMessage = STATUSES.IS_FOLLOWING;
-      // state.allUser = action.payload;
     },
     [followUser.rejected]: (state, action) => {
       console.log('followUser Rejected', action.payload);
@@ -231,7 +230,6 @@ const userSlice = createSlice({
     [unFollowUser.fulfilled]: state => {
       state.followStatus = STATUSES.SUCCESS;
       state.followStatusMessage = STATUSES.IS_UNFOLLOWING;
-      // state.allUser = action.payload;
     },
     [unFollowUser.rejected]: (state, action) => {
       console.log('unFollowUser Rejected', action.payload);
@@ -242,5 +240,3 @@ const userSlice = createSlice({
 
 export const { setFollowStatus, setUserProfileStatus } = userSlice.actions;
 export default userSlice.reducer;
-//idle status not handled after success
-// hint/suggestion: you can get current user data here instead of authSlice.

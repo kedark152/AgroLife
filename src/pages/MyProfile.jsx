@@ -89,7 +89,6 @@ export const MyProfile = () => {
 
   useEffect(() => {
     dispatch(getUserProfile({ userId }));
-    // dispatch(setUserProfileStatus('idle'));
   }, [
     userId,
     userProfileStatus === STATUSES.SUCCESS,
