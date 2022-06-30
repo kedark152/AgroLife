@@ -44,7 +44,7 @@ export const EditProfileModal = () => {
     //  open file input box on click of other element
     inputProfilePicRef.current.click();
   };
- 
+
   const { name, bio, uid, profileImageUrl, coverImageUrl, website } = userData;
   const [userProfileData, setUserProfileData] = useState({
     name,
@@ -99,7 +99,6 @@ export const EditProfileModal = () => {
           <ModalBody pb={6}>
             <Box position="relative">
               <Image
-                // src={headerImage}
                 src={media.headerImgURL}
                 boxSize="100%"
                 objectFit="cover"

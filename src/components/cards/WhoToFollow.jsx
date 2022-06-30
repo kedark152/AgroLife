@@ -23,7 +23,6 @@ export const WhoToFollow = () => {
   const followingList = authState.userData.following;
   const allUser = useSelector(state => state.user.allUser);
   const showAllUsers = allUser.filter(user => user.uid !== userId);
-  //&& !followingList.includes(user.uid)
   const allUserStatus = useSelector(state => state.user.allUserStatus);
   const [showMore, setShowMore] = useBoolean();
   let showUsers = [];

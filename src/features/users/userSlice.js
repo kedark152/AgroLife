@@ -151,10 +151,6 @@ const initialState = {
   followStatus: STATUSES.IDLE,
   followStatusMessage: '',
   userProfile: {
-    // uid,
-    // name,
-    // userName,
-    // email,
     profileImageUrl: '',
     coverImageUrl: '',
     bio: '',
