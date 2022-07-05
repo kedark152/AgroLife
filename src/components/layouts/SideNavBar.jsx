@@ -12,6 +12,7 @@ import { setStatus } from '../../features/auth/authSlice';
 import { STATUSES } from '../../utilities/statusesConstants';
 import { LogoutFeat } from '../LogoutFeat';
 import { CreatePostModal } from '../CreatePostModal';
+import { Link } from 'react-router-dom';
 
 const getActiveStyle = ({ isActive }) => ({
   backgroundColor: isActive ? '#319795' : 'none',
@@ -106,7 +107,12 @@ export const SideNavBar = () => {
         <CreatePostModal />
       </VStack>
       <Flex align="center" marginTop="10rem">
-        <Avatar name={name} src={profileImageUrl} />
+        <Avatar
+          as={Link}
+          to={`/user/${uid}`}
+          name={name}
+          src={profileImageUrl}
+        />
         <Box marginLeft="2" height={'max-content'} width="100%">
           <Flex direction="column">
             <Text fontWeight="bold">{name}</Text>
