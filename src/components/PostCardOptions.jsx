@@ -10,6 +10,7 @@ import {
   ButtonGroup,
   Flex,
   Button,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { BsThreeDots } from 'react-icons/bs';
 import { MdDelete } from 'react-icons/md';
@@ -18,6 +19,7 @@ import { deletePost } from '../features/post/postModalSlice';
 import { EditPostModal } from './EditPostModal';
 
 export const PostCardOptions = ({ postId, postData }) => {
+  const iconColor = useColorModeValue('black', 'gray.100');
   const { isOpen, onToggle, onClose } = useDisclosure();
   const dispatch = useDispatch();
   return (
@@ -33,6 +35,8 @@ export const PostCardOptions = ({ postId, postData }) => {
           aria-label="more-options"
           icon={<BsThreeDots size="1.3rem" />}
           onClick={onToggle}
+          colorScheme="transparent"
+          color={iconColor}
         />
       </PopoverTrigger>
       <PopoverContent w="10rem">
