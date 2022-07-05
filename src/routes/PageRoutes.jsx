@@ -6,6 +6,7 @@ import { MyProfile } from '../pages/MyProfile';
 import { Signup } from '../pages/Signup';
 import { Bookmarks } from '../pages/Bookmarks';
 import { RequiresAuth } from './RequiresAuth';
+import { SinglePostPage } from '../pages/SinglePostPage';
 
 export const PageRoutes = () => {
   return (
@@ -17,8 +18,10 @@ export const PageRoutes = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/user/:userId" element={<MyProfile />} />
+        <Route path={'/post/:userId/:postId'} element={<SinglePostPage />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
       </Route>
     </Routes>
   );
 };
+// /post/:userId/:postId
