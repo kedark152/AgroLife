@@ -98,30 +98,37 @@ export const Login = () => {
     <>
       <ColorModeSwitcher position="absolute" right="2rem" />
       <Container minWidth="80vw" height="80vh" p="0">
-        <Flex height="90%">
-          <Box p="4" my="5rem">
+        <Flex height="90%" direction={['column', 'row', 'row']}>
+          <Box p="4" my={['2rem', '5rem', '5rem']}>
             <Heading
               as="h1"
-              size="4xl"
-              noOfLines="2"
-              lineHeight={1.6}
+              size={['2xl', '2xl', '4xl']}
+              noOfLines="1"
               fontFamily="Dancing Script, cursive"
+              textAlign="center"
+              marginBottom="5"
             >
               AgroLife
             </Heading>
             <Spacer />
-            <Heading as="h3" size="xl" noOfLines="2">
-              Connect & Share your AgroLife Stories with Friends
+            <Heading
+              as="h3"
+              size={['md', 'md', 'xl']}
+              noOfLines="4"
+              textAlign="center"
+            >
+              Connect & Share your Agrolife Stories with Friends
             </Heading>
           </Box>
           <Spacer />
           <Box
             as="form"
-            width="30rem"
+            width={['20rem', '20rem', '30rem']}
             height="max-content"
             boxShadow="2xl"
             rounded="md"
-            marginY="2rem"
+            marginY="1rem"
+            marginX={['2rem', null, null]}
             padding="15px"
             borderRadius="10"
             onSubmit={handleSignin}
@@ -224,8 +231,6 @@ export const Login = () => {
               <Link color="black.500" href="#" marginY="5px">
                 Forgot Password?
               </Link>
-
-              {/* </Stack> */}
             </Flex>
             <Divider marginTop="10px" borderWidth="1px" borderColor="grey.50" />
             <Flex direction="column">
@@ -233,7 +238,7 @@ export const Login = () => {
                 colorScheme="whatsapp"
                 size="md"
                 variant="solid"
-                margin="1rem 5.5rem"
+                margin={['1rem 2.5rem', '1rem 4.5rem', '1rem 5.5rem']}
                 as={NavLink}
                 to="/signup"
               >

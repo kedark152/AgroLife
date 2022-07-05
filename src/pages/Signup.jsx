@@ -75,7 +75,7 @@ export const Signup = () => {
       <TopBar />
       <Box
         as="form"
-        width="30rem"
+        width={['20rem', '25rem', '30rem']}
         height="max-content"
         boxShadow="2xl"
         rounded="md"
@@ -220,7 +220,7 @@ export const Signup = () => {
             colorScheme="whatsapp"
             size="md"
             variant="solid"
-            margin="1rem 5.5rem"
+            margin={['1rem 2.5rem', '1rem 4.5rem', '1rem 5.5rem']}
             as={NavLink}
             to="/"
           >
