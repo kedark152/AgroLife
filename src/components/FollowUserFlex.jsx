@@ -14,7 +14,7 @@ export const FollowUserFlex = ({
   currentUserId,
   isFollowingUser,
 }) => {
-  const { name, userName, userId } = userData;
+  const { name, userName, userId, profileImageUrl } = userData;
   const dispatch = useDispatch();
 
   const [isFollowing, setIsFollowing] = useBoolean(isFollowingUser); //By Default initial state is false
@@ -32,7 +32,12 @@ export const FollowUserFlex = ({
 
   return (
     <Flex align="center" marginY={2}>
-      <Avatar as={Link} to={`/user/${userId}`} name={name} />
+      <Avatar
+        as={Link}
+        to={`/user/${userId}`}
+        name={name}
+        src={profileImageUrl}
+      />
       <Box
         as={Link}
         to={`/user/${userId}`}
