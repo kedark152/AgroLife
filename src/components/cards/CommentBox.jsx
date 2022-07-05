@@ -1,46 +1,125 @@
-import { Container, Flex, Avatar, Box, Text } from '@chakra-ui/react';
-import { AiOutlineHeart, AiOutlineShareAlt } from 'react-icons/ai';
-import { GoComment } from 'react-icons/go';
-import { BsThreeDots } from 'react-icons/bs';
+import {
+  Container,
+  Flex,
+  Avatar,
+  Box,
+  Text,
+  IconButton,
+  Button,
+  Input,
+  useBoolean,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
-export const CommentBox = () => {
+import { MdEdit } from 'react-icons/md';
+import { MdCancel } from 'react-icons/md';
+import { AiFillDelete } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
+import {
+  deleteComment,
+  updateComment,
+  deleteCommentFromState,
+  editCommentFromState,
+} from '../../features/post/singlePostPageSlice';
+import { useState } from 'react';
+export const CommentBox = ({ commentData, postId, index }) => {
+  const commentCardBgColor = useColorModeValue('#c0c0c0', 'gray.700');
+  const iconColor = useColorModeValue('black', 'gray.100');
+  const cardTextColor = useColorModeValue('black', 'gray.200');
+  const {
+    name,
+    commentId,
+    commentUserProfileUrl,
+    commentText,
+    commentUID,
+    commentUserName,
+    // createdAt,
+  } = commentData;
+  const dispatch = useDispatch();
+  const [isEditing, setisEditing] = useBoolean();
+  const [editComment, setEditComment] = useState(commentText);
+  const authUserId = useSelector(state => state.auth.userData.uid);
+
+  const handleDeleteComment = () => {
+    dispatch(deleteComment({ postId, commentId })); //deletes comment from firebase
+    dispatch(deleteCommentFromState(commentId));
+  };
+
+  const handleEditComment = () => {
+    dispatch(updateComment({ postId, commentId, commentText: editComment }));
+    dispatch(editCommentFromState({ index, commentText: editComment }));
+    setisEditing.toggle();
+  };
+
   return (
     <>
       <Container
-        bg="#c0c0c0"
-        w="26rem"
+        bg={commentCardBgColor}
+        w="100%"
         p="1rem"
         borderRadius={5}
         marginY="3"
-        color="black"
+        color={cardTextColor}
       >
         <Flex>
-          <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+          <Avatar name={name} src={commentUserProfileUrl} />
           <Box marginLeft="5" height={'max-content'} width="100%">
-            <Flex>
-              <Text fontWeight="bold">Tanay Pratap</Text>
-              <Text>• @tanayPT</Text>
-              <Text>• 2mins ago</Text>
+            <Flex alignItems="center" justifyContent="space-between">
+              <Flex direction={['column', 'row', 'row']}>
+                <Text fontWeight="bold">{name} •</Text>
+                <Text> @{commentUserName}</Text>
+              </Flex>
+              {authUserId == commentUID && (
+                <Flex alignItems="center" gap="0">
+                  <IconButton
+                    aria-label="edit-button-icon"
+                    color={iconColor}
+                    icon={
+                      !isEditing ? (
+                        <MdEdit size="1.3rem" />
+                      ) : (
+                        <MdCancel color="red" size="1.3rem" />
+                      )
+                    }
+                    onClick={setisEditing.toggle}
+                    colorScheme="transparent"
+                    size="sm"
+                  />
+                  <IconButton
+                    aria-label="delete-button-icon"
+                    icon={<AiFillDelete size="1.3rem" />}
+                    onClick={handleDeleteComment}
+                    colorScheme="transparent"
+                    color={iconColor}
+                    size="sm"
+                  />
+                </Flex>
+              )}
             </Flex>
-            <Text>Replying to • @tanayPT </Text>
-            <Box>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Id est
-              explicabo, debitis perferendis, quos harum, non hic nesciunt rerum
-              eius porro molestias? Nesciunt itaque, ab accusantium vel quis
-              reiciendis quod, sapiente aliquam nisi molestiae facilis
-              doloremque nemo enim ratione dolorem voluptatum voluptas!
-              Consequuntur dolor perferendis quis, facere natus odit. Magnam.
-            </Box>
-            <Flex
-              justifyContent="space-between"
-              marginTop="1rem"
-              marginBottom="5px"
-            >
-              <AiOutlineHeart size="1.3rem" />
-              <GoComment size="1.3rem" />
-              <AiOutlineShareAlt size="1.3rem" />
-              <BsThreeDots size="1.3rem" />
-            </Flex>
+            {isEditing && (
+              <Flex alignItems="center" gap="2" marginY="2">
+                <Input
+                  type="text"
+                  placeholder="Add your comment"
+                  width="90%"
+                  // marginX="10px"
+                  value={editComment}
+                  borderRadius="7px"
+                  onChange={e => setEditComment(e.target.value)}
+                  _placeholder={{ color: cardTextColor }}
+                  borderColor="black"
+                />
+                <Button
+                  colorScheme="brand"
+                  disabled={editComment.length < 2}
+                  onClick={handleEditComment}
+                  size="md"
+                >
+                  Save
+                </Button>
+              </Flex>
+            )}
+            {!isEditing && <Box>{commentText}</Box>}
           </Box>
         </Flex>
       </Container>
