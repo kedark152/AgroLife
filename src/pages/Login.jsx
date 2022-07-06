@@ -99,7 +99,7 @@ export const Login = () => {
       <ColorModeSwitcher position="absolute" right="2rem" />
       <Container minWidth="80vw" height="80vh" p="0">
         <Flex height="90%" direction={['column', 'row', 'row']}>
-          <Box p="4" my={['2rem', '5rem', '5rem']}>
+          <Box p="4" my={['2rem', '3rem', '5rem']}>
             <Heading
               as="h1"
               size={['2xl', '2xl', '4xl']}
@@ -123,7 +123,7 @@ export const Login = () => {
           <Spacer />
           <Box
             as="form"
-            width={['20rem', '20rem', '30rem']}
+            width={['20rem', '25rem', '30rem']}
             height="max-content"
             boxShadow="2xl"
             rounded="md"
