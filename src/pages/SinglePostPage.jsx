@@ -23,6 +23,7 @@ import { useLikeToast } from '../hooks/useLikeToast';
 import { useBookmarkToast } from '../hooks/useBookmarkToast';
 import { useCommentCrudToast } from '../hooks/useCommentCrudToast';
 import { getSinglePostComments } from '../features/post/singlePostPageSlice';
+import { MobileMenu } from '../components/layouts/MobileMenu';
 export const SinglePostPage = () => {
   let {
     // userId,
@@ -102,6 +103,7 @@ export const SinglePostPage = () => {
             <SearchBar />
             <WhoToFollow />
           </Box>
+          <MobileMenu />
         </Grid>
       </Container>
     </>
