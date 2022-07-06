@@ -61,7 +61,7 @@ export const Explore = () => {
     <Container maxWidth="100vw" padding={0}>
       <TopBar />
       <Grid
-        templateColumns={['0.7fr', '0.8fr', '1fr', '1fr 3fr 1.5fr']}
+        templateColumns={['0.9fr', '0.9fr', '0.9fr', '1fr 3fr 1.5fr']}
         gap="1"
         justifyContent="center"
         marginTop="5rem"
