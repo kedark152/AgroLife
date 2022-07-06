@@ -198,7 +198,9 @@ export const Post = ({ postData, currentUserId, index, pageName }) => {
               borderRadius={10}
             />
           )}
-          <Box>{textContent}</Box>
+          <Box as={Link} to={`/post/${uid}/${postId}`} cursor="pointer">
+            {textContent}
+          </Box>
           <Flex
             justifyContent="space-between"
             marginTop="1rem"
