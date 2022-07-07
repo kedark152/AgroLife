@@ -9,10 +9,14 @@ import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
 
 export const Footer = () => {
   return (
-    <Container as="footer" role="contentinfo" marginTop="1rem">
+    <Container
+      as="footer"
+      role="contentinfo"
+      marginTop={['7rem', '15rem', '1rem']}
+    >
       <Stack
         spacing={{
-          base: '4',
+          base: '2',
           md: '5',
         }}
       >

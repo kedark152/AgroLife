@@ -12,7 +12,6 @@ import {
   Grid,
   GridItem,
   Image,
-  Divider,
   Avatar,
   Flex,
   Text,
@@ -28,6 +27,7 @@ import { useCrudToast } from '../hooks/useCrudToast';
 import { useLikeToast } from '../hooks/useLikeToast';
 import { useBookmarkToast } from '../hooks/useBookmarkToast';
 import { useEffect } from 'react';
+import { MobileMenu } from '../components/layouts/MobileMenu';
 import {
   getUserProfile,
   setUserProfileStatus,
@@ -40,7 +40,7 @@ import {
   setUnFollowingState,
 } from '../features/auth/authSlice';
 import { followUser } from '../features/users/userSlice';
-
+import { CreatePostModal } from '../components/CreatePostModal';
 import { unFollowUser } from '../features/users/userSlice';
 
 export const MyProfile = () => {
@@ -114,7 +114,7 @@ export const MyProfile = () => {
       <TopBar />
 
       <Grid
-        templateColumns={'1fr 3fr 1.2fr'}
+        templateColumns={['0.9fr', '0.9fr', '0.9fr', '1fr 3fr 1.5fr']}
         gap="5"
         justifyContent="center"
         marginTop="5rem"
@@ -125,71 +125,72 @@ export const MyProfile = () => {
           top="86px"
           left="10px"
           height="max-content"
+          display={['none', 'none', 'none', 'block']}
         >
           <SideNavBar />
         </Box>
 
-        <Box as={GridItem} position="relative">
-          <Box
-            width="100%"
-            height="12rem"
-            position="absolute"
-            top="10px"
-            borderRadius="14px"
-          >
-            <Image
-              src={coverImageUrl}
-              boxSize="100%"
-              objectFit="cover"
+        <Box as={GridItem} position="relative" marginBottom="5rem">
+          <Box>
+            <Box
+              width="100%"
+              height="12rem"
+              position="absolute"
+              top="10px"
               borderRadius="14px"
-              fallbackSrc={defaultHeaderImg}
-            />
-          </Box>
-          <VStack marginBottom="30" marginTop="8rem" justifyContent="center">
-            <Avatar size="2xl" name={name} src={profileImageUrl} />
+            >
+              <Image
+                src={coverImageUrl}
+                boxSize="100%"
+                objectFit="cover"
+                borderRadius="14px"
+                fallbackSrc={defaultHeaderImg}
+              />
+            </Box>
+            <VStack marginBottom="30" marginTop="8rem" justifyContent="center">
+              <Avatar size="2xl" name={name} src={profileImageUrl} />
 
-            <Flex direction="column" position="relative">
-              <Text fontWeight="bold" fontSize="xl">
-                {name}
-              </Text>
-              <Text marginLeft="5">@{userName}</Text>
+              <Flex direction="column" position="relative">
+                <Text fontWeight="bold" fontSize="xl">
+                  {name}
+                </Text>
+                <Text marginLeft="5">@{userName}</Text>
 
-              {currentUserId == uid ? (
-                <>
-                  <EditProfileModal userData={userProfile} />
+                {currentUserId == uid ? (
+                  <>
+                    <EditProfileModal userData={userProfile} />
+                    <Button
+                      colorScheme="red"
+                      variant="outline"
+                      onClick={() => dispatch(userLogout())}
+                    >
+                      Logout
+                    </Button>
+                  </>
+                ) : (
                   <Button
-                    colorScheme="red"
-                    variant="outline"
-                    onClick={() => dispatch(userLogout())}
+                    colorScheme="teal"
+                    variant={isFollowing ? `outline` : `solid`}
+                    marginY="2"
+                    onClick={() => dispatchAction(isFollowing)}
                   >
-                    Logout
+                    {isFollowing ? `Following` : `Follow`}
                   </Button>
-                </>
-              ) : (
-                <Button
-                  colorScheme="teal"
-                  variant={isFollowing ? `outline` : `solid`}
-                  marginY="2"
-                  onClick={() => dispatchAction(isFollowing)}
-                >
-                  {isFollowing ? `Following` : `Follow`}
-                </Button>
-              )}
-            </Flex>
-            <Text marginLeft="5">
-              {following.length} Following • {followers.length} Followers
-            </Text>
-            <Text>
-              My Website:<Link marginLeft="1">{website}</Link>
-            </Text>
-            <Text>Bio: {bio}</Text>
-          </VStack>
+                )}
+              </Flex>
+              <Text marginLeft="5">
+                {following.length} Following • {followers.length} Followers
+              </Text>
+              <Text>
+                My Website:<Link marginLeft="1">{website}</Link>
+              </Text>
+              <Text>Bio: {bio}</Text>
+            </VStack>
+          </Box>
 
-          <Divider marginTop="4" borderColor="black" />
           <Text fontWeight="bold" fontSize="xl">
             My Recent Posts
           </Text>
-
           {singleUserPostsStatus === 'loading' ? (
             <Spinner
               position="absolute"
@@ -198,8 +199,8 @@ export const MyProfile = () => {
               emptyColor="gray.200"
               color="blue.500"
               size="xl"
-              left="20rem"
-              top="35rem"
+              left={['10rem', '20rem', '35rem']}
+              top={['10rem', '10rem', '15rem']}
             />
           ) : (
             singleUserPosts.length == 0 && (
@@ -208,7 +209,6 @@ export const MyProfile = () => {
               </Text>
             )
           )}
-
           {singleUserPostsStatus !== 'loading' &&
             singleUserPosts.length > 0 &&
             singleUserPosts.map((post, index) => (
@@ -228,10 +228,15 @@ export const MyProfile = () => {
           top="86px"
           right="10px"
           height="max-content"
+          display={['none', 'none', 'none', 'block']}
         >
           <SearchBar />
           <WhoToFollow />
         </Box>
+        <Box display={['block', 'block', 'none']}>
+          <CreatePostModal />
+        </Box>
+        <MobileMenu />
       </Grid>
     </Container>
   );

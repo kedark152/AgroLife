@@ -96,6 +96,7 @@ export const getSingleUserPosts = createAsyncThunk(
     }
   }
 );
+
 const initialState = {
   allPosts: [],
   allPostsStatus: STATUSES.IDLE,
@@ -105,6 +106,8 @@ const initialState = {
   bookmarksPostsStatus: STATUSES.IDLE,
   singleUserPosts: [],
   singleUserPostsStatus: STATUSES.IDLE,
+  explorePosts: [],
+  explorePostsStatus: STATUSES.IDLE,
 };
 
 const postSlice = createSlice({
@@ -125,6 +128,9 @@ const postSlice = createSlice({
     },
     setBookmarksPosts: (state, action) => {
       state.bookmarksPosts = action.payload;
+    },
+    setExplorePosts: (state, action) => {
+      state.explorePosts = action.payload;
     },
     likeSingleHomePostState: (state, action) => {
       //directly updates in state
@@ -170,6 +176,21 @@ const postSlice = createSlice({
       state.singleUserPosts[index].likes = state.singleUserPosts[
         index
       ].likes.filter(id => id !== currentUserId);
+    },
+    likeExplorePostsState: (state, action) => {
+      //directly updates in allPosts state
+      const index = action.payload.index;
+      const currentUserId = action.payload.currentUserId;
+      state.explorePosts[index].likes =
+        state.explorePosts[index].likes.concat(currentUserId);
+    },
+    unLikeExplorePostsState: (state, action) => {
+      //directly updates in allPosts state
+      const index = action.payload.index;
+      const currentUserId = action.payload.currentUserId;
+      state.explorePosts[index].likes = state.explorePosts[index].likes.filter(
+        id => id !== currentUserId
+      );
     },
   },
   extraReducers: {
@@ -225,12 +246,15 @@ export const {
   setHomePosts,
   setHomePostsStatus,
   setBookmarksPosts,
+  setExplorePosts,
   likeSingleHomePostState,
   unLikeSingleHomePostState,
   likeSingleBookmarksPostState,
   unLikeSingleBookmarksPostState,
   likeSingleUserPostsState,
   unLikeSingleUserPostsState,
+  likeExplorePostsState,
+  unLikeExplorePostsState,
 } = postSlice.actions;
 export default postSlice.reducer;
 

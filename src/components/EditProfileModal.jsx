@@ -44,7 +44,7 @@ export const EditProfileModal = () => {
     //  open file input box on click of other element
     inputProfilePicRef.current.click();
   };
- 
+
   const { name, bio, uid, profileImageUrl, coverImageUrl, website } = userData;
   const [userProfileData, setUserProfileData] = useState({
     name,
@@ -87,19 +87,25 @@ export const EditProfileModal = () => {
   };
   return (
     <>
-      <Button onClick={onOpen} colorScheme="teal" variant="solid" marginY="2">
+      <Button
+        onClick={onOpen}
+        colorScheme="teal"
+        variant="solid"
+        marginY="2"
+        isLoading={userProfileStatus == 'loading'}
+        loadingText="Updating Profile..."
+      >
         Edit Profile
       </Button>
 
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent width={['18rem', '30rem', '40rem']}>
           <ModalHeader>Edit Profile Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Box position="relative">
               <Image
-                // src={headerImage}
                 src={media.headerImgURL}
                 boxSize="100%"
                 objectFit="cover"
@@ -132,7 +138,7 @@ export const EditProfileModal = () => {
                 size="xl"
                 name={name}
                 top="4rem"
-                left="9rem"
+                left={['5rem', '9rem', '9rem']}
               />
               <IconButton
                 position="absolute"
@@ -140,7 +146,7 @@ export const EditProfileModal = () => {
                 icon={<BiCamera size="1.2rem" />}
                 borderRadius="1rem"
                 top="8rem"
-                left="13rem"
+                left={['9rem', '13rem', '13rem']}
                 colorScheme="teal"
                 size="sm"
                 onClick={handleProfilePicClick}

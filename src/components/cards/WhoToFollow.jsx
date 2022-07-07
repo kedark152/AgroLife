@@ -7,6 +7,7 @@ import {
   Divider,
   Spinner,
   useBoolean,
+  useColorModeValue,
   // Box,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
@@ -18,12 +19,13 @@ import { useDispatch } from 'react-redux';
 
 export const WhoToFollow = () => {
   const dispatch = useDispatch();
+  const cardBgColor = useColorModeValue('#D3D3D3', 'gray.800');
+  const cardTextColor = useColorModeValue('black', 'gray.200');
   const authState = useSelector(state => state.auth);
   const userId = authState.userData.uid;
   const followingList = authState.userData.following;
   const allUser = useSelector(state => state.user.allUser);
   const showAllUsers = allUser.filter(user => user.uid !== userId);
-  //&& !followingList.includes(user.uid)
   const allUserStatus = useSelector(state => state.user.allUserStatus);
   const [showMore, setShowMore] = useBoolean();
   let showUsers = [];
@@ -39,12 +41,12 @@ export const WhoToFollow = () => {
 
   return (
     <Container
-      bg="#D3D3D3"
+      bg={cardBgColor}
       marginY="3"
       p="4"
       borderRadius={5}
-      color="black"
       position="relative"
+      color={cardTextColor}
     >
       <Flex align="center" justifyContent="space-between" paddingY="2">
         <Text fontWeight="bold">Who to Follow</Text>

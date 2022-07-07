@@ -1,12 +1,14 @@
-import { HStack, Heading } from '@chakra-ui/react';
+import { HStack, Heading, useColorModeValue } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { NavLink } from 'react-router-dom';
 export const TopBar = () => {
+  const cardBgColor = useColorModeValue('teal', '#4a4e69');
+  const cardTextColor = useColorModeValue('white', 'gray.200');
   return (
     <HStack
       width="100%"
-      bg="#4a4e69"
-      color="white"
+      bg={cardBgColor}
+      color={cardTextColor}
       position="fixed"
       top="0"
       left="0"

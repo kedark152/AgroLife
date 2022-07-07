@@ -128,9 +128,9 @@ export const updateUserProfile = createAsyncThunk(
       const singleUserPostsQuery = query(postsListRef, where('uid', '==', uid));
       const querySnapshot = await getDocs(singleUserPostsQuery);
       if (querySnapshot.size > 0) {
-        for (var i in querySnapshot.docs) {
-          const document = querySnapshot.docs[i];
-          let postRef = doc(database, 'posts', document.id);
+        for (let i in querySnapshot.docs) {
+          const post = querySnapshot.docs[i];
+          let postRef = doc(database, 'posts', post.id);
           await updateDoc(postRef, {
             name: userProfileData.name,
             profileImageUrl: profileImgUrl,
@@ -138,23 +138,51 @@ export const updateUserProfile = createAsyncThunk(
         }
       }
 
+      //updates profile details in comments with same userId
+      //gets all posts ids
+      const allPostsRef = await getDocs(collection(database, 'posts'));
+      let postsIdsArray = [];
+      allPostsRef.forEach(doc => {
+        postsIdsArray.push(doc.id);
+      });
+      for (let i in postsIdsArray) {
+        const commentsListRef = collection(
+          database,
+          `posts/${postsIdsArray[i]}/comments/`
+        );
+        const sameUserCommentsQuery = query(
+          commentsListRef,
+          where('commentUID', '==', uid)
+        );
+        const commentsSnapshot = await getDocs(sameUserCommentsQuery);
+        if (commentsSnapshot.size > 0) {
+          for (let j in commentsSnapshot.docs) {
+            const comment = commentsSnapshot.docs[j];
+            let commentRef = doc(
+              database,
+              `posts/${postsIdsArray[i]}/comments/${comment.id}`
+            );
+            await updateDoc(commentRef, {
+              name: userProfileData.name,
+              commentUserProfileUrl: profileImgUrl,
+            });
+          }
+        }
+      }
+
       return updatedDetails;
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-
 const initialState = {
   allUser: [],
   allUserStatus: STATUSES.IDLE,
   followStatus: STATUSES.IDLE,
   followStatusMessage: '',
   userProfile: {
-    // uid,
-    // name,
-    // userName,
-    // email,
     profileImageUrl: '',
     coverImageUrl: '',
     bio: '',

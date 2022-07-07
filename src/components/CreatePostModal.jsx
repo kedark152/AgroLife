@@ -14,9 +14,9 @@ import {
   Textarea,
   ModalFooter,
   useDisclosure,
+  IconButton,
 } from '@chakra-ui/react';
 import { BsCardImage } from 'react-icons/bs';
-import { RiFileGifLine } from 'react-icons/ri';
 import { GrEmoji } from 'react-icons/gr';
 import { useRef } from 'react';
 import { MdCreate } from 'react-icons/md';
@@ -26,6 +26,7 @@ import { createPost } from '../features/post/postModalSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { STATUSES } from '../utilities/statusesConstants';
 import { setPostModalStatus } from '../features/post/postModalSlice';
+import { IoMdCreate } from 'react-icons/io';
 
 export const CreatePostModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,8 +40,6 @@ export const CreatePostModal = () => {
   const dispatch = useDispatch();
   const authUserData = useSelector(state => state.auth.userData);
   const postModalState = useSelector(state => state.postModal);
-
-  // const editNotesForm = useRef(null);
 
   function onEmojiClick(event, emojiObject) {
     event.stopPropagation();
@@ -93,14 +92,27 @@ export const CreatePostModal = () => {
   return (
     <>
       <Button
-        leftIcon={<MdCreate size="1.25rem" />}
+        leftIcon={<MdCreate size="1.2rem" />}
         colorScheme="brand"
+        display={['none', 'none', 'block']}
         size="md"
         w="100%"
         onClick={onOpen}
       >
         Create New Post
       </Button>
+      <IconButton
+        display={['block', 'block', 'none']}
+        colorScheme="brand"
+        icon={<IoMdCreate size="1.1rem" />}
+        position="fixed"
+        right="16px"
+        bottom="90px"
+        padding={3}
+        borderRadius="2rem"
+        size="md"
+        onClick={onOpen}
+      />
 
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -158,7 +170,6 @@ export const CreatePostModal = () => {
                   }
                 />
 
-                <RiFileGifLine fontSize="2rem" />
                 <GrEmoji
                   fontSize="2rem"
                   cursor="pointer"

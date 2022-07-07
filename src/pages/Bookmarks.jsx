@@ -14,7 +14,6 @@ import {
   GridItem,
   HStack,
   Button,
-  Divider,
 } from '@chakra-ui/react';
 import { AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai';
 
@@ -29,6 +28,8 @@ import { STATUSES } from '../utilities/statusesConstants';
 import { useCrudToast } from '../hooks/useCrudToast';
 import { useLikeToast } from '../hooks/useLikeToast';
 import { useBookmarkToast } from '../hooks/useBookmarkToast';
+import { MobileMenu } from '../components/layouts/MobileMenu';
+import { CreatePostModal } from '../components/CreatePostModal';
 
 export const Bookmarks = () => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ export const Bookmarks = () => {
       <TopBar />
 
       <Grid
-        templateColumns={'1fr 3fr 1.5fr'}
+        templateColumns={['0.9fr', '0.9fr', '0.9fr', '1fr 3fr 1.5fr']}
         gap="1"
         justifyContent="center"
         marginTop="5rem"
@@ -78,11 +79,12 @@ export const Bookmarks = () => {
           top="86px"
           left="10px"
           height="max-content"
+          display={['none', 'none', 'none', 'block']}
         >
           <SideNavBar />
         </Box>
 
-        <Box as={GridItem}>
+        <Box as={GridItem} marginBottom="5rem">
           <HStack marginBottom="30" justifyContent="center">
             <Button
               leftIcon={<AiOutlineArrowUp size="1.25rem" />}
@@ -101,8 +103,6 @@ export const Bookmarks = () => {
               Oldest
             </Button>
           </HStack>
-          {/* <CreatePost /> */}
-          <Divider marginTop="4" borderColor="black" />
 
           {bookmarksPostsStatus === 'loading' ? (
             <Spinner
@@ -112,8 +112,8 @@ export const Bookmarks = () => {
               emptyColor="gray.200"
               color="blue.500"
               size="xl"
-              left="35rem"
-              top="15rem"
+              left={['10rem', '20rem', '35rem']}
+              top={['10rem', '10rem', '15rem']}
             />
           ) : (
             bookmarksPosts.length == 0 && (
@@ -141,10 +141,15 @@ export const Bookmarks = () => {
           top="86px"
           right="10px"
           height="max-content"
+          display={['none', 'none', 'none', 'block']}
         >
           <SearchBar />
           <WhoToFollow />
         </Box>
+        <Box display={['block', 'block', 'none']}>
+          <CreatePostModal />
+        </Box>
+        <MobileMenu />
       </Grid>
     </Container>
   );

@@ -34,12 +34,12 @@ export const LogoutFeat = () => {
           onClick={onToggle}
         />
       </PopoverTrigger>
-      <PopoverContent w="12rem">
+      <PopoverContent w="10rem">
         <PopoverHeader fontWeight="semibold">Confirmation</PopoverHeader>
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverBody>Are you sure you want to logout?</PopoverBody>
-        <PopoverFooter display="flex" justifyContent="flex-end">
+        <PopoverFooter display="flex" justifyContent="flex-start">
           <ButtonGroup size="sm">
             <Button variant="outline" onClick={onToggle}>
               Cancel
