@@ -7,12 +7,14 @@ import { Signup } from '../pages/Signup';
 import { Bookmarks } from '../pages/Bookmarks';
 import { RequiresAuth } from './RequiresAuth';
 import { SinglePostPage } from '../pages/SinglePostPage';
+import { ErrorPage } from '../pages/ErrorPage';
 
 export const PageRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="*" element={<ErrorPage />} />
 
       <Route element={<RequiresAuth />}>
         <Route path="/home" element={<Home />} />
@@ -24,4 +26,3 @@ export const PageRoutes = () => {
     </Routes>
   );
 };
-// /post/:userId/:postId
