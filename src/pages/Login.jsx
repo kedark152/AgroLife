@@ -123,7 +123,7 @@ export const Login = () => {
           <Spacer />
           <Box
             as="form"
-            width={['23rem', '25rem', '30rem']}
+            width={['90vw', '90vw', '30rem']}
             height="max-content"
             boxShadow="2xl"
             rounded="md"

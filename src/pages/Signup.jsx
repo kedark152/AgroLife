@@ -75,7 +75,7 @@ export const Signup = () => {
       <TopBar />
       <Box
         as="form"
-        width={['20rem', '25rem', '30rem']}
+        width={['90vw', '90vw', '30rem']}
         height="max-content"
         boxShadow="2xl"
         rounded="md"
