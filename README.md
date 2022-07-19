@@ -1,68 +1,68 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+  <img src="https://res.cloudinary.com/dvuh4fz9d/image/upload/v1658239218/planet-earth_1_x4ukjv.png" height="100" width="220" alt="logo"/>
 
-## Available Scripts
+# 🌱 AgroLife 🌎
 
-In the project directory, you can run:
+### A Social Media App for Farming Community.
 
-### `npm start`
+ </div>
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## About AgroLife
 
-### `npm test`
+- AgroLife is a Social Media platform where one can easily share their life events & learnings related to Agriculture.
+- People can connect by following each other people and get knowledge and learnings from their friends.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Live Deployment
 
-### `npm run build`
+Checkout the live deployment here: [AgroLife](https://agrolife.netlify.app/)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Home Feed with Sort Posts by Trending, Newest & Oldest Post.
+- Explore Page with Various Categories to filter post by Trending, Facts, News, Technology, Hydroponic Farming.
+- Single Post Page - User can like post, add edit & delete comment of post and add post to bookmark / remove from bookmark.
+- Bookmark Page - This Page consist of all posts bookmarked by user.
+- Post CRUD Operations - User can create new post, add image to post, edit post, update image of post and delete post.
+- Search Friends - User can search friends to follow/unfollow.
+- Who to Follow - User can see the list of people whom he can follow/unfollow.
+- 404 Page - Added 404 Page Not Found.
+- Profile Page - Profile Page shows name, username, profile & cover image of logged in user and all posts created by user. In Profile Page user can edit his all profile info.
+- Added Firebase authentication.
+- Dark/Light mode
+- Added Responsiveness for nearly all devices from 360px onwards.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Tech Stack and Tools
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Chakra UI
+- React JS
+- Redux Tool Kit
+- React Router v6
+- Backend setup using Firebase Firestore Database.
+- Netlify for Deployment
+- Cloudinary for Hosting of Images
+- [Flaticons](https://www.flaticon.com/) for colorful icons.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Issues & Suggestions
 
-### Code Splitting
+- If you face any issues while using the app, then you can surely raise issue on this repo.
+- You can also give your valuable suggestions/ feedback to improve this project via Email (Mail-id in below section).
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Connect with me:
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<p align="left">
+<a href = "mailto: kedar.kulkarni12@gmail.com" target="blank"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="gmail" /></a>
+<a href="https://www.linkedin.com/in/kedark152/" target="blank"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="linkedin-kedark152-link" /></a>
+<a href="https://kedark152.hashnode.dev/" target="blank"><img src="https://img.shields.io/badge/Hashnode-2962FF?style=for-the-badge&logo=hashnode&logoColor=white" alt="hashnode-kedark152-link" /></a>
+<a href="https://twitter.com/Kulkarni12Kedar" target="blank"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" alt="twitter" /></a>
+</p>
