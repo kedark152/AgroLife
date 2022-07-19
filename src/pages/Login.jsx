@@ -12,6 +12,8 @@ import {
   Button,
   Link,
   Divider,
+  Image,
+  Text,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
@@ -99,17 +101,22 @@ export const Login = () => {
       <ColorModeSwitcher position="absolute" right="2rem" />
       <Container minWidth="80vw" height="80vh" p="0">
         <Flex height="90%" direction={['column', 'row', 'row']}>
-          <Box p="4" my={['2rem', '3rem', '5rem']}>
-            <Heading
-              as="h1"
-              size={['2xl', '2xl', '4xl']}
+          <Box p="2" my={['2rem', '3rem', '5rem']}>
+            <Image
+              boxSize={['90px', '90px', '120px']}
+              mx={['40vw', '4vw', '18vw']}
+              src="https://res.cloudinary.com/dvuh4fz9d/image/upload/v1658239218/planet-earth_1_x4ukjv.png"
+            />
+            <Text
+              fontSize={['5xl', '3xl', '6xl']}
+              fontWeight="bold"
               noOfLines="1"
               fontFamily="Dancing Script, cursive"
               textAlign="center"
-              marginBottom="5"
+              marginBottom="2"
             >
               AgroLife
-            </Heading>
+            </Text>
             <Spacer />
             <Heading
               as="h3"
@@ -117,7 +124,7 @@ export const Login = () => {
               noOfLines="4"
               textAlign="center"
             >
-              Connect & Share your Agrolife Stories with Friends
+              Connect & share your agrolife stories with friends
             </Heading>
           </Box>
           <Spacer />
