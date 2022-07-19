@@ -30,7 +30,7 @@ Checkout the live deployment here: [AgroLife](https://agrolife.netlify.app/)
 - Search Friends - User can search friends to follow/unfollow.
 - Who to Follow - User can see the list of people whom he can follow/unfollow.
 - 404 Page - Added 404 Page Not Found.
-- Profile Page - Profile Page shows name, username, profile & cover image of logged in user and all posts created by user. In Profile Page user can edit his all profile info.
+- Profile Page - Profile Page shows name, username, profile & cover image of logged in user and all posts created by user. In Profile Page user can edit their all profile info.
 - Added Firebase authentication.
 - Dark/Light mode
 - Added Responsiveness for nearly all devices from 360px onwards.
