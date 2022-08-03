@@ -10,7 +10,6 @@ import {
   Input,
   FormLabel,
   Button,
-  Link,
   Divider,
   Image,
   Text,
@@ -134,7 +133,7 @@ export const Login = () => {
             height="max-content"
             boxShadow="2xl"
             rounded="md"
-            marginY="1rem"
+            marginTop={['1rem', '2rem', '4rem']}
             marginX={['2rem', null, null]}
             padding="15px"
             borderRadius="10"
@@ -235,11 +234,8 @@ export const Login = () => {
                   Test Login
                 </Button>
               )}
-              <Link color="black.500" href="#" marginY="5px">
-                Forgot Password?
-              </Link>
             </Flex>
-            <Divider marginTop="10px" borderWidth="1px" borderColor="grey.50" />
+            <Divider marginTop="1rem" borderWidth="1px" borderColor="grey.50" />
             <Flex direction="column">
               <Button
                 colorScheme="whatsapp"
