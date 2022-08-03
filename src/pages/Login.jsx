@@ -107,7 +107,7 @@ export const Login = () => {
               src="https://res.cloudinary.com/dvuh4fz9d/image/upload/v1658239218/planet-earth_1_x4ukjv.png"
             />
             <Text
-              fontSize={['5xl', '3xl', '6xl']}
+              fontSize={['5xl', '4xl', '6xl']}
               fontWeight="bold"
               noOfLines="1"
               fontFamily="Dancing Script, cursive"
