@@ -12,7 +12,7 @@ export const Footer = () => {
     <Container
       as="footer"
       role="contentinfo"
-      marginTop={['7rem', '15rem', '1rem']}
+      marginTop={['7rem', '1rem', '1rem']}
     >
       <Stack
         spacing={{
