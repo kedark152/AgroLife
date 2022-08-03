@@ -31,9 +31,7 @@ import { MobileMenu } from '../components/layouts/MobileMenu';
 import { CreatePostModal } from '../components/CreatePostModal';
 export const Explore = () => {
   const explorePosts = useSelector(state => state.post.explorePosts);
-  const explorePostsStatus = useSelector(
-    state => state.post.explorePostsStatus
-  );
+  
   const allPosts = useSelector(state => state.post.allPosts);
   const allPostsStatus = useSelector(state => state.post.allPostsStatus);
   const postModalState = useSelector(state => state.postModal);
@@ -124,7 +122,7 @@ export const Explore = () => {
             </Button>
           </HStack>
 
-          {explorePostsStatus === 'loading' ? (
+          {allPostsStatus === 'loading' ? (
             <Spinner
               position="absolute"
               thickness="4px"
@@ -143,7 +141,7 @@ export const Explore = () => {
             )
           )}
 
-          {explorePostsStatus !== 'loading' &&
+          {allPostsStatus !== 'loading' &&
             explorePosts.length > 0 &&
             explorePosts.map((post, index) => (
               <Post
