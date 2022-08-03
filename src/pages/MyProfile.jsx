@@ -199,7 +199,7 @@ export const MyProfile = () => {
               emptyColor="gray.200"
               color="blue.500"
               size="xl"
-              left={['10rem', '20rem', '35rem']}
+              left={['10rem', '20rem', '25rem']}
               top={['10rem', '10rem', '15rem']}
             />
           ) : (
