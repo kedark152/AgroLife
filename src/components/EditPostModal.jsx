@@ -17,7 +17,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { BsCardImage } from 'react-icons/bs';
-import { RiFileGifLine } from 'react-icons/ri';
+// import { RiFileGifLine } from 'react-icons/ri';
 import { GrEmoji, GrClose } from 'react-icons/gr';
 import { useRef } from 'react';
 import { FaEdit } from 'react-icons/fa';
@@ -171,7 +171,7 @@ export const EditPostModal = ({ postData }) => {
                   }
                 />
 
-                <RiFileGifLine fontSize="2rem" />
+                {/* <RiFileGifLine fontSize="2rem" /> */}
                 <GrEmoji
                   fontSize="2rem"
                   cursor="pointer"
