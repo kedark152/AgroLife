@@ -16,7 +16,7 @@ export const TopBar = () => {
     >
       <Heading
         as={NavLink}
-        to="/"
+        to="/home"
         size="xl"
         noOfLines="2"
         lineHeight={1.6}
