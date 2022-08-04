@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { SearchQueryFlex } from './SearchQueryFlex';
 import { useState } from 'react';
 export const SearchBar = () => {
-  const cardBgColor = useColorModeValue('#D3D3D3', 'gray.800');
+  const cardBgColor = useColorModeValue('#FFFFFF', 'gray.800');
   const searchResultBgColor = useColorModeValue('white', 'black');
   const cardTextColor = useColorModeValue('black', 'gray.200');
   const allUser = useSelector(state => state.user.allUser);
@@ -22,14 +22,10 @@ export const SearchBar = () => {
   return (
     <>
       <Container
-        // w="379px"
         h="56px"
         bg={cardBgColor}
         color={cardTextColor}
-        // border="2px"
-        // borderColor="#D3D3D3"
         borderRadius={5}
-        // _hover={{ border: '2px', borderColor: 'brand.300' }}
         position="relative"
       >
         <Flex
