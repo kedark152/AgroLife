@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Text, Flex, VStack, Avatar, Box, Container } from '@chakra-ui/react';
-import { AiOutlineHome } from 'react-icons/ai';
+import { AiFillHome } from 'react-icons/ai';
 import { MdExplore } from 'react-icons/md';
-import { BsBookmark } from 'react-icons/bs';
-import { CgProfile } from 'react-icons/cg';
+import { BsFillBookmarkFill } from 'react-icons/bs';
+import { BsFillPersonFill } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -58,7 +58,7 @@ export const SideNavBar = () => {
           fontSize="1.25rem"
           w="100%"
         >
-          <AiOutlineHome />
+          <AiFillHome />
           <Text marginLeft={2}>Home</Text>
         </Flex>
 
@@ -87,7 +87,7 @@ export const SideNavBar = () => {
           fontSize="1.25rem"
           w="100%"
         >
-          <BsBookmark fontSize="1.25rem" />
+          <BsFillBookmarkFill fontSize="1.25rem" />
           <Text marginLeft={2}>Bookmarks</Text>
         </Flex>
         <Flex
@@ -101,7 +101,7 @@ export const SideNavBar = () => {
           fontSize="1.25rem"
           w="100%"
         >
-          <CgProfile fontSize="1.25rem" />
+          <BsFillPersonFill fontSize="1.25rem" />
           <Text marginLeft={2}>Profile</Text>
         </Flex>
         <CreatePostModal />
