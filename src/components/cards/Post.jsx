@@ -67,7 +67,7 @@ export const Post = ({ postData, currentUserId, index, pageName }) => {
   const [isBookmarked, setIsBookmarked] = useBoolean(isInBookmarksList);
   const [commentCount, setCommentCount] = useState(0);
 
-  const postBgColor = useColorModeValue('#D3D3D3', 'gray.800');
+  const postBgColor = useColorModeValue('#FFFFFF', 'gray.800');
   const postTextColor = useColorModeValue('black', 'gray.200');
   const iconColor = useColorModeValue('black', 'gray.100');
   const likeColor = useColorModeValue('red', 'gray.100');

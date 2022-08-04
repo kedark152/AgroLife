@@ -19,7 +19,7 @@ import { useDispatch } from 'react-redux';
 
 export const WhoToFollow = () => {
   const dispatch = useDispatch();
-  const cardBgColor = useColorModeValue('#D3D3D3', 'gray.800');
+  const cardBgColor = useColorModeValue('#FFFFFF', 'gray.800');
   const cardTextColor = useColorModeValue('black', 'gray.200');
   const authState = useSelector(state => state.auth);
   const userId = authState.userData.uid;
