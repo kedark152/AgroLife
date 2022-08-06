@@ -16,7 +16,7 @@ import { v4 as uuid } from 'uuid';
 import { addCommentToState } from '../../features/post/singlePostPageSlice';
 import { getCurrentDate } from '../../utilities/utils';
 export const CommentContainer = ({ postId }) => {
-  const cardBgColor = useColorModeValue('#D3D3D3', 'gray.800');
+  const cardBgColor = useColorModeValue('#FFFFFF', 'gray.800');
   const inputBorderColor = useColorModeValue('black', 'gray.200');
   const cardTextColor = useColorModeValue('black', 'gray.200');
   const initialCommentInputState = '';

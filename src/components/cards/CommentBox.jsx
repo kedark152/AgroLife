@@ -23,7 +23,7 @@ import {
 } from '../../features/post/singlePostPageSlice';
 import { useState } from 'react';
 export const CommentBox = ({ commentData, postId, index }) => {
-  const commentCardBgColor = useColorModeValue('#c0c0c0', 'gray.700');
+  const commentCardBgColor = useColorModeValue('#DBD7D2', 'gray.700');
   const iconColor = useColorModeValue('black', 'gray.100');
   const cardTextColor = useColorModeValue('black', 'gray.200');
   const {
