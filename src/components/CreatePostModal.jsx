@@ -124,7 +124,7 @@ export const CreatePostModal = () => {
               <Textarea
                 value={postData}
                 onChange={e => setPostData(e.target.value)}
-                placeholder="Write your story..."
+                placeholder="Write your story here..."
                 size="md"
                 resize="none"
                 rows="7"
@@ -202,6 +202,7 @@ export const CreatePostModal = () => {
                 loadingText={
                   postModalState.status === STATUSES.LOADING && `Posting...`
                 }
+                disabled={postData.length < 2}
               >
                 Post
               </Button>

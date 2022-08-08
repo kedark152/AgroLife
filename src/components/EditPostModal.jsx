@@ -204,6 +204,7 @@ export const EditPostModal = ({ postData }) => {
                 loadingText={
                   postModalState.status === STATUSES.LOADING && `Posting...`
                 }
+                disabled={postTextContent.length < 2}
               >
                 Post
               </Button>
