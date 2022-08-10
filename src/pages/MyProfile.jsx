@@ -163,6 +163,7 @@ export const MyProfile = () => {
                       colorScheme="red"
                       variant="outline"
                       onClick={() => dispatch(userLogout())}
+                      disabled={userProfileStatus == 'loading'}
                     >
                       Logout
                     </Button>
