@@ -13,12 +13,14 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { FiLogOut } from 'react-icons/fi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../features/auth/authSlice';
 
 export const LogoutFeat = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const dispatch = useDispatch();
+  const userProfileState = useSelector(state => state.user);
+  const userProfileStatus = userProfileState.userProfileStatus;
   return (
     <Popover
       returnFocusOnClose={false}
@@ -32,6 +34,7 @@ export const LogoutFeat = () => {
           aria-label="Logout icon"
           icon={<FiLogOut size="1.2rem" />}
           onClick={onToggle}
+          disabled={userProfileStatus == 'loading'}
         />
       </PopoverTrigger>
       <PopoverContent w="10rem">
