@@ -219,7 +219,7 @@ export const Login = () => {
               >
                 Log In
               </Button>
-              {authState.status !== STATUSES.LOADING && (
+              {/* {authState.status !== STATUSES.LOADING && (
                 <Button
                   type="submit"
                   colorScheme="teal"
@@ -233,7 +233,7 @@ export const Login = () => {
                 >
                   Test Login
                 </Button>
-              )}
+              )} */}
             </Flex>
             <Divider marginTop="1rem" borderWidth="1px" borderColor="grey.50" />
             <Flex direction="column">
