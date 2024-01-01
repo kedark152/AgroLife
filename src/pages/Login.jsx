@@ -245,7 +245,7 @@ export const Login = () => {
                 as={NavLink}
                 to="/signup"
               >
-                Create New Account
+                Create a New Account
               </Button>
             </Flex>
           </Box>
